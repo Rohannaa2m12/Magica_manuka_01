@@ -184,3 +184,96 @@ contract RegionalApiaryManukaHoneyTapestry {
     }
 
     function oracleCommitVector(
+        uint16 regionId,
+        uint128 mgoPpm,
+        uint8 umfHint,
+        uint32 polyphenolFingerprint,
+        bytes32 aiModelDigest,
+        bytes32 batchRoot
+    ) external onlyOracle whenNotPaused {
+        if (aiModelDigest == bytes32(0)) revert Wnq_AiDigestEmpty();
+        if (mgoPpm > MGO_CEILING) revert Wnq_MGOOverflow();
+        if (umfHint > 32) revert Wnq_UMFEnvelope();
+        RegionalHoneyEnvelope storage e = envelopes[regionId];
+        if (e.frozen) revert Wnq_RegionDormant();
+        e.mgoPpm = mgoPpm;
+        e.umfHint = umfHint;
+        e.polyphenolFingerprint = polyphenolFingerprint;
+        e.aiModelDigest = aiModelDigest;
+        e.lastVectorEpoch = uint64(block.timestamp);
+        unchecked {
+            _globalNonce += 1;
+        }
+        emit NectarVectorCommitted(regionId, aiModelDigest, uint64(block.timestamp));
+        emit HighlandsBatchCertified(regionId, batchRoot, mgoPpm);
+    }
+
+    // =============================================================
+    // External — public signals (no token custody)
+    // =============================================================
+    function castConsumerSignal(uint16 regionId, SentimentBucket bucket, uint8 weight)
+        external
+        whenNotPaused
+    {
+        if (weight == 0 || weight > 5) revert Wnq_SentimentBounds();
+        RegionalHoneyEnvelope memory e = envelopes[regionId];
+        if (e.lastVectorEpoch == 0) revert Wnq_RegionUnknown();
+        if (e.frozen) revert Wnq_RegionDormant();
+        if (block.timestamp - lastSignalAt[msg.sender] < SIGNAL_COOLDOWN) revert Wnq_SignalCooldown();
+        lastSignalAt[msg.sender] = block.timestamp;
+        ConsumerPulse storage p = pulses[regionId][bucket];
+        unchecked {
+            p.rollingSum += uint128(uint256(weight) * 11);
+            p.count += 1;
+        }
+        p.lastSignalAt = uint64(block.timestamp);
+        emit PollenTraceEmitted(msg.sender, regionId, uint8(bucket));
+        emit KiwianaSignalPulse(regionId, uint256(p.rollingSum));
+    }
+
+    // =============================================================
+    // Views
+    // =============================================================
+    function envelopeHash(uint16 regionId) external view returns (bytes32) {
+        RegionalHoneyEnvelope memory e = envelopes[regionId];
+        return
+            keccak256(
+                abi.encode(
+                    regionId,
+                    e.mgoPpm,
+                    e.umfHint,
+                    e.polyphenolFingerprint,
+                    e.aiModelDigest,
+                    e.lastVectorEpoch,
+                    e.frozen,
+                    e.tierHint
+                )
+            );
+    }
+
+    function isVectorStale(uint16 regionId) external view returns (bool) {
+        uint256 ts = envelopes[regionId].lastVectorEpoch;
+        if (ts == 0) return true;
+        return block.timestamp - ts > VECTOR_STALE;
+    }
+
+    function blendPreview(uint16 regionId, uint256 salt) external view returns (uint256) {
+        RegionalHoneyEnvelope memory e = envelopes[regionId];
+        uint256 acc = uint256(e.polyphenolFingerprint) ^ uint256(e.aiModelDigest) ^ salt;
+        acc ^= uint256(keccak256(abi.encodePacked(TRACE_VEC, regionId, acc, _LATTICE_A)));
+        acc ^= uint256(keccak256(abi.encodePacked(LOOM_SALT, acc, _LATTICE_B)));
+        return acc;
+    }
+
+    function anchorFingerprint(address who) external view returns (bytes32) {
+        return keccak256(abi.encodePacked(who, TRUST_ANCHOR_A, TRUST_ANCHOR_B, _LATTICE_C, _LATTICE_D));
+    }
+
+    function sentinelMatrix() external pure returns (address, address, address) {
+        return (_SENTINEL_OPEN, _SENTINEL_VOID, _SENTINEL_LEGACY);
+    }
+
+    function globalNonce() external view returns (uint256) {
+        return _globalNonce;
+    }
+
