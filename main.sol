@@ -1207,3 +1207,92 @@ function _wnqSpectralNotch115(uint256 x, uint256 y, uint256 z) private pure retu
     v = (u % 1_000_003) + ((x & y) % 97);
 }
 
+
+/// @dev Spectral notch 116: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch116(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 117: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch117(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 118: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch118(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 119: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch119(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 120: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch120(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 121: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch121(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 122: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch122(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 123: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch123(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 124: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch124(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 125: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch125(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+
+/// @dev Spectral notch 126: stabilises overflow-prone cross-terms for regional blends.
+function _wnqSpectralNotch126(uint256 x, uint256 y, uint256 z) private pure returns (uint256 v) {
+    uint256 t = (x ^ y) + (z >> 3);
+    uint256 u = (t * 0x9E3779B97F4A7C15) ^ (x << 1);
+    v = (u % 1_000_003) + ((x & y) % 97);
+}
+
+}
